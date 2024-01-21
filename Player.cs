@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private int healtf = 10;
+    private int coins;
     public GameObject fireballPrefab;
     public Transform attackPoint;
     // Start is called before the first frame update
@@ -13,6 +14,13 @@ public class Player : MonoBehaviour
         healtf -= damage;
         print("здоровье: " + healtf);
 
+
+    }
+    //Метод, увеличивающий число монеток
+    public void CollectCoins()
+    {
+        coins++;
+        print("Собранные монетки: " + coins);
     }
     void Update()
     {
