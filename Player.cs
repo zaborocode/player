@@ -4,37 +4,40 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private int healtf = 10;
-    private int coins;
-    public GameObject fireballPrefab;
-    public Transform attackPoint;
-    // Start is called before the first frame update
-    public void TakeDamage(int damage)
-    {
-        healtf -= damage;
-        print("здоровье: " + healtf);
+    public int points;
 
+    public Projectile projectilePrefab;
 
-    }
-    //Метод, увеличивающий число монеток
-    public void CollectCoins()
-    {
-        coins++;
-        print("Собранные монетки: " + coins);
-    }
+    public float shootInterval;
+    public float shootTimer;
+
+    public Transform shootPoint;
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Move();
+
+        shootTimer -= Time.deltaTime;
+
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        if (shootTimer <= 0)
         {
-            Instantiate(fireballPrefab,
-      attackPoint.
-      position, attackPoint.
-      rotation);
+            Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
+            shootTimer = shootInterval;
         }
     }
-}   
-
-
-
-
-
+    // Start is called before the first frame update
+    void Move()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 mousePos = Input.mousePosition;
+            Vector2 realPos = Camera.main.ScreenToWorldPoint(mousePos);
+            transform.position = realPos;
+        }
+    }
+}
